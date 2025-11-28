@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="nl-be">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Elias klok</title>
+</head>
+
+<body>
+    <h1>Elias klok</h1>
+    <form action="/save" method="POST">
+    <div class="input">
+        <label for="alarm">Alarm Tijd</label>
+        <input type="time" value="{ALARM_HOUR}" name="alarm" id="alarm">
+    </div>
+    <div class="input">
+        <label for="zomeruur">Zomeruur</label>
+        <input type="number" value="{SUMMER}" name="zomeruur" id="zomeruur">
+    </div>
+    <div class="input">
+        <label for="winteruur">Winteruur</label>
+        <input type="number" value="{WINTER}" name="winteruur" id="winteruur">
+    </div>
+    <div class="input">
+        <label for="wifi-naam">wifi naam</label>
+        <input type="text" value="{SSID}" name="wifi-naam" id="wifi-naam">
+    </div>
+    <div class="input">
+        <label for="wifi-wachtwoord">wifiwactwoord</label>
+        <input type="password" value="{PASSWORD}" name="wifi-wachtwoord" id="wifi-wachtwoord">
+    </div>
+    <button type="submit">Opslaan</button>
+    </form>
+</body>
+
+</html>
+<style>
+    body {
+        font-family: sans-serif;
+    }
+</style>
