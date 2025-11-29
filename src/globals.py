@@ -5,4 +5,5 @@ SETTINGS = {
     "ZOMERUUR": 2,
     "WINTERUUR": 1,
     "ALARM": [6, 31],
+    "DAGEN": [True, True, True, True, True, False, False],
 }

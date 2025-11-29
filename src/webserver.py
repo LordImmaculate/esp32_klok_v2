@@ -115,17 +115,29 @@ def start_web_server():
                     except Exception:
                         alarm_uur = [7, 0]  # default
 
+                # parse weekday checkboxes: presence in form => checked/True
+                dagen = [
+                    bool(form.get("ma")),
+                    bool(form.get("di")),
+                    bool(form.get("wo")),
+                    bool(form.get("do")),
+                    bool(form.get("vr")),
+                    bool(form.get("za")),
+                    bool(form.get("zo")),
+                ]
+
                 globals.SETTINGS = {
                     "WIFI_NAAM": wifi_naam,
                     "WIFI_WACHTWOORD": wifi_wachtwoord,
                     "ZOMERUUR": zomer,
                     "WINTERUUR": winter,
                     "ALARM": alarm_uur,
+                    "DAGEN": dagen,
                 }
 
                 save_settings("settings.json", globals.SETTINGS)
                 print(
-                    f"Saved settings: SSID={wifi_naam}, PASSWORD={wifi_wachtwoord}, SUMMER={zomer}, WINTER={winter}, ALARM={alarm_uur}"
+                    f"Saved settings: SSID={wifi_naam}, PASSWORD={wifi_wachtwoord}, SUMMER={zomer}, WINTER={winter}, ALARM={alarm_uur}, DAGEN={dagen}"
                 )
 
                 # Respond with a simple redirect back to root (or a confirmation)
@@ -143,9 +155,17 @@ def start_web_server():
             summer_value = globals.SETTINGS.get("ZOMERUUR", 1)
             winter_value = globals.SETTINGS.get("WINTERUUR", 0)
             alarm_hour_value = globals.SETTINGS.get("ALARM", [7, 0])
+            dagen_value = globals.SETTINGS.get(
+                "DAGEN", [True, True, True, True, True, False, False]
+            )
 
             response_html = web_page(
-                ssid_value, pw_value, summer_value, winter_value, alarm_hour_value
+                ssid_value,
+                pw_value,
+                summer_value,
+                winter_value,
+                alarm_hour_value,
+                dagen_value,
             )
 
             # Construct the HTTP Response Header
@@ -170,7 +190,7 @@ def start_web_server():
             )  # Small delay to avoid hammering the connection if errors persist
 
 
-def web_page(ssid, password, summer, winter, alarm_hour):
+def web_page(ssid, password, summer, winter, alarm_hour, dagen):
     try:
         html = open("index.html", "r").read()
     except Exception:
@@ -181,4 +201,16 @@ def web_page(ssid, password, summer, winter, alarm_hour):
     html = html.replace("{SUMMER}", str(summer))
     html = html.replace("{WINTER}", str(winter))
     html = html.replace("{ALARM_HOUR}", f"{alarm_hour[0]:02}:{alarm_hour[1]:02}")
+
+    # map each boolean to "checked" or ""
+    checked_vals = ["checked" if bool(x) else "" for x in dagen]
+    # order: ma, di, wo, do, vr, za, zo
+    html = html.replace("{MA_CHECKED}", checked_vals[0])
+    html = html.replace("{DI_CHECKED}", checked_vals[1])
+    html = html.replace("{WO_CHECKED}", checked_vals[2])
+    html = html.replace("{DO_CHECKED}", checked_vals[3])
+    html = html.replace("{VR_CHECKED}", checked_vals[4])
+    html = html.replace("{ZA_CHECKED}", checked_vals[5])
+    html = html.replace("{ZO_CHECKED}", checked_vals[6])
+
     return html

@@ -10,27 +10,44 @@
 <body>
     <h1>Elias klok</h1>
     <form action="/save" method="POST">
-    <div class="input">
-        <label for="alarm">Alarm Tijd</label>
-        <input type="time" value="{ALARM_HOUR}" name="alarm" id="alarm">
-    </div>
-    <div class="input">
-        <label for="zomeruur">Zomeruur</label>
-        <input type="number" value="{SUMMER}" name="zomeruur" id="zomeruur">
-    </div>
-    <div class="input">
-        <label for="winteruur">Winteruur</label>
-        <input type="number" value="{WINTER}" name="winteruur" id="winteruur">
-    </div>
-    <div class="input">
-        <label for="wifi-naam">wifi naam</label>
-        <input type="text" value="{SSID}" name="wifi-naam" id="wifi-naam">
-    </div>
-    <div class="input">
-        <label for="wifi-wachtwoord">wifiwactwoord</label>
-        <input type="password" value="{PASSWORD}" name="wifi-wachtwoord" id="wifi-wachtwoord">
-    </div>
-    <button type="submit">Opslaan</button>
+        <div class="input">
+            <label for="alarm">Alarm Tijd</label>
+            <input type="time" value="{ALARM_HOUR}" name="alarm" id="alarm">
+        </div>
+        <div class="input">
+            <label for="zomeruur">Zomeruur</label>
+            <input type="number" value="{SUMMER}" name="zomeruur" id="zomeruur">
+        </div>
+        <div class="input">
+            <label for="winteruur">Winteruur</label>
+            <input type="number" value="{WINTER}" name="winteruur" id="winteruur">
+        </div>
+        <div class="input">
+            <label for="wifi-naam">wifi naam</label>
+            <input type="text" value="{SSID}" name="wifi-naam" id="wifi-naam">
+        </div>
+        <div class="input">
+            <label for="wifi-wachtwoord">wifiwactwoord</label>
+            <input type="password" value="{PASSWORD}" name="wifi-wachtwoord" id="wifi-wachtwoord">
+        </div>
+        <span>Dagen actief:</span>
+        <div class="dagen">
+            <label for="ma">Ma</label>
+            <input type="checkbox" name="ma" id="ma" {MA_CHECKED}>
+            <label for="di">Di</label>
+            <input type="checkbox" name="di" id="di" {DI_CHECKED}>
+            <label for="wo">Wo</label>
+            <input type="checkbox" name="wo" id="wo" {WO_CHECKED}>
+            <label for="do">Do</label>
+            <input type="checkbox" name="do" id="do" {DO_CHECKED}>
+            <label for="vr">Vr</label>
+            <input type="checkbox" name="vr" id="vr" {VR_CHECKED}>
+            <label for="za">Za</label>
+            <input type="checkbox" name="za" id="za" {ZA_CHECKED}>
+            <label for="zo">Zo</label>
+            <input type="checkbox" name="zo" id="zo" {ZO_CHECKED}>
+        </div>
+        <button type="submit">Opslaan</button>
     </form>
 </body>
 
@@ -38,5 +55,10 @@
 <style>
     body {
         font-family: sans-serif;
+    }
+
+    .dagen {
+        display: flex;
+        gap: 10px;
     }
 </style>

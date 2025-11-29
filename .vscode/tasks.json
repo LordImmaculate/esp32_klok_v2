@@ -1,0 +1,28 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "mp++: Quick Run",
+      "type": "shell",
+      "command": "mpremote run \"${file}\"",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "mp++: Mount & Run",
+      "type": "shell",
+      "options": { "cwd": "${workspaceFolder}/src" },
+      "command": "mpremote mount \".\" run main.py",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

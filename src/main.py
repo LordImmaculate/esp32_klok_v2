@@ -1,4 +1,3 @@
-from typing import List
 from machine import Pin, SoftI2C
 from machine_i2c_lcd import I2cLcd
 import network
@@ -57,14 +56,12 @@ def formateer_uur() -> tuple[str, time.struct_time]:
     if dst:
         toevoegde_tijd = globals.SETTINGS["ZOMERUUR"] * 3600
 
-    print("DST actief:", dst, "toegevoegde tijd (s):", toevoegde_tijd)
-
     tijd = time.localtime()
     epoch = time.mktime(tijd) + toevoegde_tijd
     tijd = time.localtime(epoch)
 
     tijd = time.localtime()
-    uur = tijd[3] + 1
+    uur = tijd[3]
     minuten = tijd[4]
     jaar = tijd[0]
     maand = tijd[1]
@@ -112,7 +109,8 @@ while True:
 
     # Start alarm als het uur overeenkomt met de ingestelde alarmtijd
     if (
-        globals.SETTINGS["ALARM"][0] == uur_tuple[3]
+        globals.SETTINGS["DAGEN"][uur_tuple[6]]
+        and globals.SETTINGS["ALARM"][0] == uur_tuple[3]
         and globals.SETTINGS["ALARM"][1] == uur_tuple[4]
         and uur_tuple[5] == 0
         and not alarm_afgegaan
