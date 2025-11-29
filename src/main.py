@@ -60,7 +60,6 @@ def formateer_uur() -> tuple[str, time.struct_time]:
     epoch = time.mktime(tijd) + toevoegde_tijd
     tijd = time.localtime(epoch)
 
-    tijd = time.localtime()
     uur = tijd[3]
     minuten = tijd[4]
     jaar = tijd[0]
@@ -90,9 +89,12 @@ print(ip)
 globals.IP = ip
 
 ntptime.settime()
-uur = formateer_uur()
+(uur, _) = formateer_uur()
+alarm = globals.SETTINGS["ALARM"]
 lcd.clear()
 lcd.putstr(uur)
+lcd.move_to(0, 2)
+lcd.putstr(f"Alarm: {alarm[0]:02d}:{alarm[1]:02d}")
 lcd.move_to(0, 3)
 lcd.putstr(ip)
 alarm_afgegaan = False
@@ -106,12 +108,13 @@ _thread.start_new_thread(start_web_server, ())
 
 while True:
     (uur_nu, uur_tuple) = formateer_uur()
+    alarm_nu = globals.SETTINGS["ALARM"]
 
     # Start alarm als het uur overeenkomt met de ingestelde alarmtijd
     if (
         globals.SETTINGS["DAGEN"][uur_tuple[6]]
-        and globals.SETTINGS["ALARM"][0] == uur_tuple[3]
-        and globals.SETTINGS["ALARM"][1] == uur_tuple[4]
+        and alarm_nu[0] == uur_tuple[3]
+        and alarm_nu[1] == uur_tuple[4]
         and uur_tuple[5] == 0
         and not alarm_afgegaan
     ):
@@ -138,14 +141,13 @@ while True:
         lcd.backlight_off()
 
     # Update het uur op het display als het veranderd is
-    if uur_nu != uur:
+    if uur_nu != uur or alarm_nu != alarm:
         uur = uur_nu
+        alarm = alarm_nu
         lcd.clear()
         lcd.putstr(uur)
         lcd.move_to(0, 2)
-        lcd.putstr(
-            f"Alarm: {globals.SETTINGS['ALARM'][0]:02d}:{globals.SETTINGS['ALARM'][1]:02d}"
-        )
+        lcd.putstr(f"Alarm: {alarm_nu[0]:02d}:{alarm_nu[1]:02d}")
         lcd.move_to(0, 3)
         lcd.putstr(ip)
     time.sleep(0.01)
